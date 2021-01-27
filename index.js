@@ -15,14 +15,19 @@ var factory = SplitFactory({
   }
 });
 var client = factory.client();
-var userId = 'test_user'
+var userId = Math.random().toString(36).substring(7);
 
 client.on(client.Event.SDK_READY, function() {
-  var treatment = client.getTreatment(userId, 'chat-message');
+  var splitResult = client.getTreatmentWithConfig(userId, 'chat-message');
+  console.log(splitResult);
+  var treatment = splitResult.treatment;
+  var configs = JSON.parse(splitResult.config);
   if (treatment == 'on') {
       console.log('Treatment on for User: ' + userId);
+      console.log('Configs for this treatment: ', configs)
   } else if (treatment == 'off') {
       console.log('Treatment off for User: ' + userId);
+      console.log('Configs for this treatment: ', configs)
   }
 });
 
